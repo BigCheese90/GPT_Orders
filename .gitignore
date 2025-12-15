@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+.venv/
+venv/
+.env
+*.log
+.DS_Store
+.idea
+Bestellungen/
+*.csv
+main.py
+VectorStore
+itscope.py
+vectorStore.py
