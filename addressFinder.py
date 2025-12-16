@@ -78,3 +78,25 @@ def find_address_number(order, is_customer=False):
         return test[0]["Nummer"]
     else:
         return 0
+
+def add_address_number(customer, delivery_address):
+    address_data = pd.read_csv(BASE_DIR / "Addressenstamm.csv", sep=";")
+    delivery_number_base = str(customer) +"-L"
+    i = 0
+    while True:
+        new_delivery_number = delivery_number_base + str(i)
+        if new_delivery_number not in address_data["Nummer"].values:
+            break
+        i += 1
+    new_row = {"Nummer": new_delivery_number,
+               "Firmenname_1": delivery_address["name"],
+               "Strasse": delivery_address["street"],
+               "Plz": delivery_address["zip"],
+               "Ort": delivery_address["city"],
+               "Ist_Kunde": 0}
+    new_row = pd.DataFrame(pd.Series(new_row)).T
+    address_data = pd.concat([address_data, new_row], ignore_index=True)
+    address_data['Ist_Kunde'] = address_data['Ist_Kunde'].astype('Int64')
+    address_data.to_csv(BASE_DIR / "Addressenstamm.csv", index=False, sep=";")
+    return new_delivery_number
+

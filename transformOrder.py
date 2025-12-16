@@ -1,6 +1,6 @@
 import pandas as pd
 from datetime import datetime
-from addressFinder import find_address_number
+from addressFinder import find_address_number, add_address_number
 from articleNumbers import validate_article_number
 import logging
 import json
@@ -11,7 +11,8 @@ def transform_order(data):
     delivery_address_number = find_address_number(data["delivery_address"])
     if "" in data["delivery_address"]:
         data["delivery_address"] = data["invoice_address"]
-    delivery_address_number = find_address_number(data["delivery_address"])
+    if delivery_address_number == 0 or delivery_address_number == "0":
+        delivery_address_number = add_address_number(customer_number, data["delivery_address"])
     date = data["order_date"]
     date = datetime.strptime(date, "%Y-%m-%d").date()
     date = date.strftime("%d.%m.%Y")
@@ -51,7 +52,7 @@ def transform_order(data):
         order.append(position)
 
     df = pd.DataFrame.from_dict(order)
-    logging.info(df)
+    logging.info(df.to_string())
     return df
 
 def validate_response_and_extract_data(response):
