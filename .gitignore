@@ -13,3 +13,4 @@ VectorStore
 itscope.py
 vectorStore.py
 emailParser
+emailTestParser
