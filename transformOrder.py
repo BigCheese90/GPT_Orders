@@ -17,6 +17,7 @@ def transform_order(data):
     date = datetime.strptime(date, "%Y-%m-%d").date()
     date = date.strftime("%d.%m.%Y")
     order = []
+    print(data["referenz"])
     for i, item in enumerate(data["items"]):
         article_number = validate_article_number(item["manufacturer_product_number"])
         if article_number == "Not Found":
@@ -39,7 +40,7 @@ def transform_order(data):
             "Menge": item["quantity"],
             "Preis": "",
             "Belegtext": f"e-mail Best. #{data['order_id']} vom {date}" if i == 0 else "",
-            "Referenz": data["referenz"],
+            "Referenz": clean_strings_for_export(data["referenz"]) if i == 0 else "",
             "Datum": date,
             "Liefer-ID": delivery_address_number,
             "Land": "A",
@@ -64,3 +65,8 @@ def validate_response_and_extract_data(response):
         logging.critical(e)
         logging.critical(response)
         return  None
+
+def clean_strings_for_export(string):
+    string = string.replace(";",",")
+    string = string.replace('"',"'")
+    return string

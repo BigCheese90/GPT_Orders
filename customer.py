@@ -4,9 +4,9 @@ from addressFinder import find_address_number
 
 if __name__ == "__main__":
     order = {
-        'name': 'TechnikLaden.at',
-        "street": "Eltzgasse 3",
-        "zip": "2620"
+        'name': 'NEUMANN Messgeräte GmbH',
+        "street": "Stammersdorfer Straße 60",
+        "zip": "1210"
     }
     print(find_address_number(order, is_customer=True))
 

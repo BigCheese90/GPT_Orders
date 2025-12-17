@@ -34,8 +34,8 @@ def score_address(order, customer):
     zip_exact = 100 if order["zip"] == customer["Plz"] else 0
 
     total = (
-        0.5 * name_score +
-        0.5 * street_score
+        0.3 * name_score +
+        0.7 * street_score
 
     )
     if total > 80:

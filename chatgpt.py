@@ -28,7 +28,10 @@ def query_gpt(client, email_subject: str, email_body: str, pdf_text: str ):
     Extrahiere NUR Daten die in der Bestellung stehen
     Wenn bei einer Position keine Artikelnummer (weder sku noch manufacturer_product_number) gefunden wird, ignoriere diese Position und gib keinen Output dazu aus.
     Trage alles dass möglicherweise eine Artikelnummer sein könnte und bei einem Produkt aufgeführt wird in das Feld mögliche Artikelnummern ein
-    Sollte eine Kommission oder Referenz aufgeführt sein, schreibe diese in das Feld referenz.
+    Sollte eine Kommission oder Referenz aufgeführt sein, schreibe diese in das Feld Referenz.
+    Referenz meistens am Anfang des Dokuments, es handelt sich um einen Namen/Projektnummer, unterscheidet sich aber von der Bestellnummer.
+    Extrahiere die Referenz nur wenn es sich von Bestellnummer und Artikelnummern unterscheidet
+    Die Referenz steht nicht bei den Artikelpositionen, es sollte sich um maximal 1-2 Zeilen handeln.
     Die folgenden Firmendaten meiner Firma sollen nicht extrahiert werden:
     Allnet Österreich GmbH
     Dr. Erwin Schrödinger Strasse 14
