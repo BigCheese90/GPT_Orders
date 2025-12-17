@@ -12,5 +12,5 @@ main.py
 VectorStore
 itscope.py
 vectorStore.py
-emailParser
-emailTestParser
+emailParser.py
+emailTestParser.py
