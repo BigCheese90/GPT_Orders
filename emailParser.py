@@ -33,10 +33,11 @@ def main():
 
     message.Move(target)
     #GPTBestellImport()
+    return df
 
 
 if __name__ == "__main__":
-    main()
+    df = main()
 
 
 

@@ -1,6 +1,6 @@
 from rapidfuzz import fuzz
 import pandas as pd
-from config import BASE_DIR
+from config import ADDRESS_CSV
 def normalize(s: str) -> str:
     if not s:
         return ""
@@ -67,7 +67,7 @@ def special_customers(address: pd.DataFrame):
     return address
 
 def find_address_number(order, is_customer=False):
-    address = pd.read_csv(BASE_DIR / "Addressenstamm.csv", sep=";", na_filter=False)
+    address = pd.read_csv(ADDRESS_CSV, sep=";", na_filter=False)
     if is_customer:
         address = address[address.iloc[:, 7] == 1 ]
     address = special_customers(address)
@@ -80,7 +80,7 @@ def find_address_number(order, is_customer=False):
         return 0
 
 def add_address_number(customer, delivery_address):
-    address_data = pd.read_csv(BASE_DIR / "Addressenstamm.csv", sep=";")
+    address_data = pd.read_csv(ADDRESS_CSV, sep=";")
     delivery_number_base = str(customer) +"-L"
     i = 0
     while True:
@@ -97,6 +97,6 @@ def add_address_number(customer, delivery_address):
     new_row = pd.DataFrame(pd.Series(new_row)).T
     address_data = pd.concat([address_data, new_row], ignore_index=True)
     address_data['Ist_Kunde'] = address_data['Ist_Kunde'].astype('Int64')
-    address_data.to_csv(BASE_DIR / "Addressenstamm.csv", index=False, sep=";")
+    address_data.to_csv(ADDRESS_CSV, index=False, sep=";")
     return new_delivery_number
 

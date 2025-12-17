@@ -1,10 +1,10 @@
 import pandas as pd
-from config import BASE_DIR
+from config import ARTICLE_CSV
 
 
 def validate_article_number(article_number: str) -> str:
     article_number = article_number.lower()
-    data = pd.read_csv(BASE_DIR / "ArtikelMitHerstellerNummern.csv",
+    data = pd.read_csv(ARTICLE_CSV,
                                   sep=";",
                                   dtype={"AllnetArtikelNummer": str,
                                          "HerstellerArtikelNummer": str}, on_bad_lines='skip')
@@ -20,4 +20,4 @@ def validate_article_number(article_number: str) -> str:
 
 
 if __name__ == "__main__":
-    print(validate_article_number("ALL1681203"))
+    print(validate_article_number("5060408464236"))
