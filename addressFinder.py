@@ -74,7 +74,7 @@ def find_address_number(order, is_customer=False):
     customers = address.to_dict(orient="records")
 
     test = find_best_match(order, customers)
-    if test[1] > 85:
+    if test[1] > 80:
         return test[0]["Nummer"]
     else:
         return 0
