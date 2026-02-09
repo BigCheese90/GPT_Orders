@@ -32,6 +32,7 @@ def main():
     df = create_csv_from_email(message.subject, message.body, pdf_text)
 
     message.Move(target)
+    df.to_csv("\\\\192.168.31.10\\Office\\Anleitungen\\Stuff\\EmailBestellImport.csv", sep=";", index=False)
     #GPTBestellImport()
     return df
 

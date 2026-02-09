@@ -17,6 +17,18 @@ logging.basicConfig(filename=BASE_DIR / "Queries.log",
                     datefmt = "%Y-%m-%d %H:%M",
                     level=logging.INFO)
 
+# List of loggers used by FastAPI/Uvicorn
+fastapi_loggers = [
+    "uvicorn",
+    "uvicorn.access",
+    "uvicorn.error",
+    "fastapi"
+]
+
+# Set all of them to WARNING level
+for logger_name in fastapi_loggers:
+    logging.getLogger(logger_name).setLevel(logging.WARNING)
+
 def query_gpt(client, email_subject: str, email_body: str, pdf_text: str ):
     instructions = """
     Beginne mit einer kurzen Checkliste (3-7 Punkte), um den Ablauf zur strukturierten Extraktion sicherzustellen. Extrahiere aus dem bereitgestellten Text die für die Bestellung benötigten Daten. Analysiere den Text und identifiziere alle Positionen, für die eine Bestellung erfolgen soll.
@@ -84,7 +96,7 @@ def create_csv_from_email(email_subject:str, email_body, pdf_text:str = ""):
         data = validate_response_and_extract_data(response)
         df = transform_order(data)
 
-    df.to_csv("\\\\192.168.31.10\\Office\\Anleitungen\\Stuff\\EmailBestellImport.csv", sep=";", index=False)
+
     return df
 
 
