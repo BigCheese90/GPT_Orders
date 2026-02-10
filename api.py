@@ -80,7 +80,7 @@ def test_item(email_item: EmailItem):
             f.write(file_data)
 
         if att.name.lower()[-4:] == ".pdf":
-            pdf_text = parse_pdf_to_text(order_path / f"{att.name}")
+            pdf_text = parse_pdf_to_text(order_path / f"{attachment_name}")
             print(pdf_text)
 
     df = create_csv_from_email(email_item.subject, email_item.body, pdf_text)
