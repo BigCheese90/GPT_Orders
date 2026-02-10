@@ -7,6 +7,7 @@ venv/
 .DS_Store
 .idea
 Bestellungen/
+API_Orders/
 *.csv
 main.py
 VectorStore

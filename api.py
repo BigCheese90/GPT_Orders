@@ -14,6 +14,7 @@ from config import BASE_DIR
 from datetime import datetime
 import re
 import wawiImport
+import uvicorn
 app = FastAPI()
 origins = ["https://localhost:3000"]
 app.add_middleware(
@@ -111,3 +112,11 @@ def import_order(import_data: ImportItem):
         result = wawiImport.GPTAngebotImport()
         print(result)
     return {"message": "Item successfully uploaded",}
+
+if __name__ == "__main__":
+    uvicorn.run("api:app",
+                host="0.0.0.0",
+                port=8432,
+                reload=True,
+                ssl_keyfile="./localhost+2-key.pem",
+                ssl_certfile="./localhost+2.pem")
