@@ -4,6 +4,7 @@ import time
 import base64
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, field_validator
 from typing import Optional, List, Any
 import pandas as pd
@@ -24,6 +25,7 @@ app.add_middleware(
     allow_methods=["*"],              # Allows GET, POST, OPTIONS, etc.
     allow_headers=["*"],              # Allows all headers (Content-Type, etc.)
 )
+
 
 
 
@@ -112,6 +114,8 @@ def import_order(import_data: ImportItem):
         result = wawiImport.GPTAngebotImport()
         print(result)
     return {"message": "Item successfully uploaded",}
+
+app.mount("/frontend", StaticFiles(directory="static"), name="static")
 
 if __name__ == "__main__":
     uvicorn.run("api:app",
