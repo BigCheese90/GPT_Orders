@@ -73,9 +73,10 @@ def test_item(email_item: EmailItem):
         f.write(email_item.body)
     for att in email_item.attachments:
         file_data = base64.b64decode(att.contentBytes)
+        attachment_name = re.sub(r'[^\w\s-]', '', att.name)
 
 
-        with open(order_path / f"{att.name}", "wb") as f:
+        with open(order_path / f"{attachment_name}", "wb") as f:
             f.write(file_data)
 
         if att.name.lower()[-4:] == ".pdf":
