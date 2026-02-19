@@ -1,5 +1,6 @@
 import pandas as pd
 from datetime import datetime
+from chatGptHelper import Order
 from addressFinder import find_address_number, add_address_number
 from articleNumbers import validate_article_number
 import logging
@@ -14,7 +15,7 @@ def transform_order(data):
     if delivery_address_number == 0 or delivery_address_number == "0":
         delivery_address_number = add_address_number(customer_number, data["delivery_address"])
     date = data["order_date"]
-    date = datetime.strptime(date, "%Y-%m-%d").date()
+    #date = datetime.strptime(date, "%Y-%m-%d").date()
     date = date.strftime("%d.%m.%Y")
     order = []
     print(data["referenz"])
@@ -56,11 +57,12 @@ def transform_order(data):
     logging.info(df.to_string())
     return df
 
-def validate_response_and_extract_data(response):
+def validate_response_and_extract_data(response) -> Order | None:
     try:
         data = json.loads(response.output[-1].content[0].text)
         logging.info(data)
-        return data
+
+        return Order.model_validate(data)
     except Exception as e:
         logging.critical(e)
         logging.critical(response)

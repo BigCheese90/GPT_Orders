@@ -3,5 +3,6 @@ setup(name="EmailBestellImport", version="0.1", packages=find_packages(), instal
                                                                                             'python-dotenv', 'openai',
                                                                                             'pydantic', 'pandas',
                                                                                             'rapidfuzz', 'fastapi',
-                                                                                            'uvicorn'])
+                                                                                            'uvicorn',
+                                                                                            'typing-extensions'])
 

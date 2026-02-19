@@ -1,34 +1,11 @@
 
 import pdfplumber
+
 from pydantic import BaseModel, field_serializer, field_validator, constr
 from datetime import date, datetime
 
 
-# schema = {
-#     "type": "object",
-#     "properties": {
-#         "order_id": {"type": "string"},
-#         "customer_name": {"type": "string"},
-#         "order_date": {"type": "string"},
-#         "currency": {"type": "string"},
-#         "items": {
-#             "type": "array",
-#             "items": {
-#                 "type": "object",
-#                 "properties": {
-#                     "position": {"type": "integer"},
-#                     "article": {"type": "string"},
-#                     "description": {"type": "string"},
-#                     "quantity": {"type": "number"},
-#                     "unit": {"type": "string"},
-#                     "unit_price": {"type": "number"},
-#                 },
-#                 "required": ["position", "description", "quantity"]
-#             }
-#         }
-#     },
-#     "required": ["order_id", "items"]
-# }
+
 
 class OrderItem(BaseModel):
     Bestellnummer: str
@@ -52,7 +29,10 @@ class Address(BaseModel):
     zip: str
     city: str
 
-
+class AddressSearch(BaseModel):
+    address_score: float
+    address: Address
+    address_number: str
 
 class Order(BaseModel):
     order_id: str
@@ -74,6 +54,11 @@ class Order(BaseModel):
         if not (date(current_year-3, 1, 1) <= v <= date(current_year, 12, 31)):
             raise ValueError("order_date must be between 2020 and 2035.")
         return v
+
+
+
+
+
 
 
 def parse_pdf_to_text(pdf_path: str) -> str:

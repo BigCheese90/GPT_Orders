@@ -18,7 +18,8 @@ import wawiImport
 import uvicorn
 app = FastAPI()
 origins = ["https://localhost:8432",
-           "https://192.168.31.180:8432"]
+           "https://192.168.31.180:8432",
+           "https://localhost:3000"]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,            # Allows specific domains

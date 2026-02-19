@@ -1,6 +1,7 @@
 from rapidfuzz import fuzz
 import pandas as pd
 from config import ADDRESS_CSV
+from chatGptHelper import AddressSearch, Address
 def normalize(s: str) -> str:
     if not s:
         return ""
@@ -19,11 +20,11 @@ def normalize(s: str) -> str:
         s = s.replace(old, new)
     return " ".join(s.split())
 
-def score_address(order, customer):
+def score_address(address: Address, customer):
     # order / customer sind dicts mit name, street, house_no, zip, city
 
-    name_o = normalize(order["name"])
-    street_o = normalize(order["street"])
+    name_o = normalize(address.name)
+    street_o = normalize(address.street)
     name_c = normalize(customer["Firmenname_1"])
     street_c = normalize(customer["Strasse"])
 
@@ -31,7 +32,7 @@ def score_address(order, customer):
     street_score = fuzz.token_sort_ratio(street_o, street_c)
 
 
-    zip_exact = 100 if order["zip"] == customer["Plz"] else 0
+    zip_exact = 100 if address.zip == customer["Plz"] else 0
 
     total = (
         0.3 * name_score +
@@ -47,7 +48,8 @@ def find_best_match(order, customers):
     best_score = -1
 
     # Blocking: nur gleiche PLZ
-    candidates = [c for c in customers if c["Plz"] == order["zip"]]
+    order.zip = order.zip.lower().replace("a-","")
+    candidates = [c for c in customers if c["Plz"] == order.zip]
 
     for c in candidates:
         s = score_address(order, c)
@@ -78,6 +80,43 @@ def find_address_number(order, is_customer=False):
         return test[0]["Nummer"]
     else:
         return 0
+
+def find_customer_address(search_address):
+    address_list = pd.read_csv(ADDRESS_CSV, sep=";", na_filter=False)
+
+    address_list = address_list[address_list.iloc[:, 7] == 1]
+    address_list = special_customers(address_list)
+    customers = address_list.to_dict(orient="records")
+
+    best_match, score = find_best_match(search_address, customers)
+    customer_address = Address(name=best_match["Firmenname_1"],
+                                    street=best_match["Strasse"],
+                                    zip=best_match["Plz"],
+                                    city=best_match["Ort"])
+    customer_number = best_match["Nummer"]
+    result = AddressSearch(address_score=score, address=customer_address, address_number=customer_number)
+
+    return result
+
+
+
+def find_delivery_address(search_address, customer):
+    address_list = pd.read_csv(ADDRESS_CSV, sep=";", na_filter=False)
+
+    address_list = special_customers(address_list)
+    customers = address_list.to_dict(orient="records")
+
+    best_match, score = find_best_match(search_address, customers)
+    delivery_address = search_address
+    delivery_address_number = best_match["Nummer"]
+    if score < 90 or delivery_address_number == "0":
+        delivery_address_number = add_address_number(customer.address_number, search_address)["Nummer"]
+
+    # if "" in data["delivery_address"]:
+    #     data["delivery_address"] = data["invoice_address"]
+
+    result = AddressSearch(address_score=score, address=delivery_address, address_number=delivery_address_number)
+    return result
 
 def add_address_number(customer, delivery_address):
     address_data = pd.read_csv(ADDRESS_CSV, sep=";")

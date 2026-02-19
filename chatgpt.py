@@ -1,6 +1,7 @@
 from openai import OpenAI
 import pdfplumber
 from chatGptHelper import Order
+from gptQueryContainer import GPTQueryContainer
 from config import BASE_DIR
 import logging
 from dotenv import load_dotenv
@@ -87,21 +88,32 @@ def create_csv_from_email(email_subject:str, email_body, pdf_text:str = ""):
     client = OpenAI(api_key=API_KEY)
 
     response = query_gpt(client, email_subject, email_body, pdf_text)
-    print(response.usage)
-    data = validate_response_and_extract_data(response)
-    df = transform_order(data)
-    if df.shape[0] != len(data["items"]):
+    gpt_query_container = GPTQueryContainer(gpt_response=response)
+
+    print(len(gpt_query_container.df))
+    print(len(gpt_query_container.validated_order.items))
+
+    if len(gpt_query_container.df) != len(gpt_query_container.validated_order.items):
         logging.info("Mismatch, Querying again")
         response = query_gpt(client, email_subject, email_body, pdf_text)
-        data = validate_response_and_extract_data(response)
-        df = transform_order(data)
+        gpt_query_container = GPTQueryContainer(gpt_response=response)
 
+    return gpt_query_container
 
-    return df
+    # data = validate_response_and_extract_data(response)
+    # data = data.model_dump()
+    # df = transform_order(data)
+    # if df.shape[0] != len(data["items"]):
+    #     logging.info("Mismatch, Querying again")
+    #     response = query_gpt(client, email_subject, email_body, pdf_text)
+    #     data = validate_response_and_extract_data(response)
+    #     df = transform_order(data)
+
+    # return df, data, response
 
 
 if __name__ == "__main__":
-    pdf_path = "Bestellung_2025-12-05_B200060073_400360.pdf"
+    pdf_path = "Bestellungen\\Bestellung_2025-12-17_B200062682_400360.PDF"
     with (pdfplumber.open(str(pdf_path)) as pdf):
         pdf_text = ""
         for page in pdf.pages:
@@ -127,4 +139,7 @@ if __name__ == "__main__":
 
     """
 
-    df_test = create_csv_from_email(subject, body, pdf_text)
+
+    test_query = create_csv_from_email(subject, body, pdf_text)
+
+    print(test_query.df)
