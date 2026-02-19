@@ -1,0 +1,256 @@
+/* 
+ * Copyright (c) Microsoft Corporation. All rights reserved. Licensed under the MIT license.
+ * See LICENSE in the project root for license information.
+ */
+
+ html,
+ body {
+     width: 100%;
+     height: 100%;
+     margin: 0;
+     padding: 0;
+ }
+ 
+ ul {
+     margin: 0;
+     padding: 0;
+ }
+ 
+ .ms-welcome__header {
+    padding: 20px;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    align-items: center;
+ }
+
+ .ms-welcome__main {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -webkit-flex-wrap: nowrap;
+    flex-wrap: nowrap;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-flex: 1 0 0;
+    flex: 1 0 0;
+    padding: 10px 20px;
+ }
+ 
+ .ms-welcome__main > h2 {
+     width: 100%;
+     text-align: center;
+ }
+ 
+ .ms-welcome__features {
+     list-style-type: none;
+     margin-top: 20px;
+ }
+ 
+ .ms-welcome__features.ms-List .ms-ListItem {
+     padding-bottom: 20px;
+     display: -webkit-flex;
+     display: flex;
+ }
+ 
+ .ms-welcome__features.ms-List .ms-ListItem > .ms-Icon {
+     margin-right: 10px;
+ }
+ 
+ .ms-welcome__action.ms-Button--hero {
+     margin-top: 30px;
+ }
+ 
+.ms-Button.ms-Button--hero .ms-Button-label {
+  color: #0078d7;
+}
+
+.ms-Button.ms-Button--hero:hover .ms-Button-label,
+.ms-Button.ms-Button--hero:focus .ms-Button-label{
+  color: #005a9e;
+  cursor: pointer;
+}
+
+b {
+    font-weight: bold;
+}
+
+.display-results {
+    display: none;
+    text-align: left;
+    padding: 10px 10px;
+    margin: 10px 10px;
+    background-color: #ffffff}
+
+body {
+    background-color: #faf9f8; /* Light gray-wash background */
+    color: #323130;
+    font-family: "Segoe UI", Tahoma, sans-serif;
+}
+
+.outlook-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #ffffff;
+}
+
+.outlook-table thead th {
+    background-color: #f3f2f1;
+    color: #605e5d;
+    font-weight: 600;
+    font-size: 12px;
+    padding: 8px;
+    border-bottom: 1px solid #edebe9;
+    text-align: left;
+}
+
+.outlook-table td {
+    padding: 8px;
+    border-bottom: 1px solid #f3f2f1;
+    font-size: 13px;
+}
+
+/* Highlight the key ID or Number in Outlook Blue */
+.highlight-id {
+    color: #0078d4;
+    font-weight: 600;
+}
+
+.outlook-table tr:hover {
+    background-color: #f3f2f1; /* Subtle hover effect */
+}
+/* Card Container */
+.data-section {
+    background: #ffffff;
+    border: 1px solid #edebe9;
+    padding: 16px;
+    border-radius: 2px;
+    margin-bottom: 20px;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Label Style */
+.label {
+    display: block;
+    font-size: 11px;
+    font-weight: 600;
+    color: #605e5d; /* Gray secondary text */
+    text-transform: uppercase;
+    margin-bottom: 2px;
+}
+.value {
+    display: block;
+    font-size: 14px;
+    color: #323130; /* Dark primary text */
+    margin-bottom: 12px;
+}
+
+/* Special styling for the Order Number in the text */
+.order-highlight {
+    color: #0078d4; /* Outlook Blue */
+    font-weight: 600;
+}
+
+/* Address Block */
+.address-box {
+    line-height: 1.4;
+    font-style: normal;
+    color: #323130;
+   }
+
+.loader-container {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 200px; /* Adjust based on your taskpane height */
+    font-family: 'Segoe UI', sans-serif;
+    color: #605e5d;
+}
+
+.spinner {
+    width: 28px;
+    height: 28px;
+    border: 3px solid #edebe9; /* Light gray ring */
+    border-top: 3px solid #0078d4; /* Outlook Blue part */
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-bottom: 10px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.selection-item {
+    /*border-bottom: 1px solid #edebe9;*/
+    padding-bottom: 12px;
+}
+
+.preview-text {
+    font-size: 13px;
+    color: #605e5d;
+    padding-left: 25px;
+}
+
+textarea.form-control {
+    width: 100%;
+    border: 1px solid #ced4da;
+    border-radius: 2px;
+    font-family: 'Segoe UI', sans-serif;
+    font-size: 13px;
+    padding: 8px;
+}
+
+.btn-outlook {
+    display: flex;
+    background-color: #0078d4;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    margin: 2px 2px;
+    width: 70%;
+    font-weight: 600;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-order {
+    background-color: #0078d4;
+}
+
+.btn-outlook:hover {
+    background-color: #005a9e;
+}
+
+.btn-offer {
+    background-color: #107c10;
+}
+.btn-offer:hover{
+    background-color: #0b5a0b;
+}
+
+
+.loader-error {
+    color: #d83b01;
+    display: none
+}
+
+.option-buttons {
+    display:none
+}
+
+.result-box {
+    display:None
+}
+
+.image-container {
+    display: flex;
+    justify-content: center; /* Horizontal */
+    align-items: center;     /* Vertical */
+    height: 200px;           /* Needs a height to center vertically */
+}
