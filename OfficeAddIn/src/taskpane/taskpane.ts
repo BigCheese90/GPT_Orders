@@ -31,7 +31,10 @@ Office.onReady(async (info) => {
     const attachmentContainer = document.getElementById("attachment-list")
     const attachments = await Helper.getAttachments(item)
     attachments.forEach((att) => {
-      if (att.contentType == "application/pdf" || att.contentType == "application/x-pdf" ) {
+      if (att.contentType == "application/octet-stream" && att.name.endsWith(".pdf")){
+        att.contentType = "application/pdf"
+      }
+      if (att.contentType == "application/pdf" || att.contentType == "application/x-pdf") {
         attachmentContainer.innerHTML += `
           <div class="selection-item">
               <input type="checkbox" id=${att.id} class="attachment-checkbox" checked>
