@@ -64,7 +64,7 @@ def test_item(email_item: EmailItem):
 
     timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
     clean_subject = re.sub(r'[^\w\s-]', '', email_item.subject)
-    filename = timestamp + "_" + clean_subject
+    filename = timestamp + "_" + clean_subject.rstrip()
 
     order_path = BASE_DIR / "Api_Orders" / filename
     order_path.mkdir(parents=True, exist_ok=True)
@@ -74,7 +74,7 @@ def test_item(email_item: EmailItem):
         f.write(email_item.body)
     for att in email_item.attachments:
         file_data = base64.b64decode(att.contentBytes)
-        attachment_name = re.sub(r'[^\w\s-]', '', att.name)
+        attachment_name = re.sub(r'[^\w\s.-]', '', att.name)
 
 
         with open(order_path / f"{attachment_name}", "wb") as f:
