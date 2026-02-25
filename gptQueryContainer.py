@@ -45,7 +45,7 @@ class GPTQueryContainer(BaseModel):
         order_items= []
 
         for i, item in enumerate(order_validated.items):
-            article_number = find_allnet_article_number(item)
+            article_number, article_description = find_allnet_article_number(item)
             if article_number == "Not Found":
                 continue
             position = {
@@ -63,7 +63,8 @@ class GPTQueryContainer(BaseModel):
                 "Ort": order_validated.delivery_address.city,
                 "Strasse": order_validated.delivery_address.street,
                 "Name1": order_validated.delivery_address.name,
-                "Name2": ""
+                "Name2": "",
+                "Artikelbezeichnung": article_description,
             }
             order_items.append(position)
 

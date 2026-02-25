@@ -20,16 +20,23 @@ def validate_article_number(article_number: str) -> str:
         return "Not Found"
 def validate_single_article_number(article_number: str, article_list: pd.DataFrame) -> str:
     print("validating ", article_number)
+    if len(article_number) < 3:
+        print("too short")
+        return "Not Found"
+
     article_number = article_number.lower()
     if article_number in article_list.AllnetArtikelNummer.values:
+        print("found ", article_number)
         return article_number
     match_manufacturer = article_list[article_list.HerstellerArtikelNummer == article_number]
     if match_manufacturer.shape[0] == 1:
-        return match_manufacturer.AllnetArtikelNummer.values[0]
+        article_number = match_manufacturer.AllnetArtikelNummer.values[0]
+        print("found ", article_number)
+        return article_number
     else:
         return "Not Found"
 
-def find_allnet_article_number(item: OrderItem) -> str:
+def find_allnet_article_number(item: OrderItem) -> tuple[str, str]:
     data = pd.read_csv(ARTICLE_CSV,
                        sep=";",
                        dtype={"AllnetArtikelNummer": str,
@@ -44,9 +51,11 @@ def find_allnet_article_number(item: OrderItem) -> str:
     for possible in possible_numbers:
         article_number = validate_single_article_number(str(possible), data)
         if article_number != "Not Found":
-            break
+            article_description = data[data.AllnetArtikelNummer == article_number]["Artikelbeschreibung"]
+            return article_number, article_description
 
-    return article_number
+
+    return "Not Found", ""
 
 
 
