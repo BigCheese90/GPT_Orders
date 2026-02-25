@@ -51,9 +51,8 @@ def find_allnet_article_number(item: OrderItem) -> tuple[str, str]:
     for possible in possible_numbers:
         article_number = validate_single_article_number(str(possible), data)
         if article_number != "Not Found":
-            article_description = data[data.AllnetArtikelNummer == article_number]["Artikelbeschreibung"]
+            article_description = data[data.AllnetArtikelNummer == article_number].at[0, "Artikelbezeichnung"]
             return article_number, article_description
-
 
     return "Not Found", ""
 
