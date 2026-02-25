@@ -64,7 +64,7 @@ class GPTQueryContainer(BaseModel):
                 "Strasse": order_validated.delivery_address.street,
                 "Name1": order_validated.delivery_address.name,
                 "Name2": "",
-                "Artikelbezeichnung": article_description,
+                "Artikelbeschreibung": article_description,
             }
             order_items.append(position)
 

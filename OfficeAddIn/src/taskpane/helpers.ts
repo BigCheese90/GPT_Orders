@@ -99,7 +99,7 @@ export function cancelSend() {
 export function createTable(df) {
     const headerRow = document.getElementById("header-row");
     const tableBody = document.getElementById("table-body");
-    const requiredCols = ["Pos", "Artikelnummer", "Menge", "Artikelbezeichnung"]
+    const requiredCols = ["Pos", "Artikelnummer", "Menge", "Artikelbeschreibung"]
 
     requiredCols.forEach(col => {
         const th = document.createElement("th")
