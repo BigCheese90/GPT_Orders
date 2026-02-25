@@ -113,7 +113,7 @@ def test_df():
 def import_order(import_data: ImportItem):
     print(import_data.type)
     df = pd.DataFrame(import_data.df)
-    df = df.drop(columns=["Artikelbezeschreibung"])
+    df = df.drop(columns=["Artikelbeschreibung"])
     print(df)
     if import_data.type == "order":
         df.to_csv("\\\\192.168.31.10\\Office\\Anleitungen\\Stuff\\EmailBestellImport.csv", sep=";", index=False)
