@@ -117,22 +117,34 @@ export function createTable(df) {
     })
 }
 
-export function fillInfo(df) {
-    const customerNumberContainer = document.getElementById("customer-number-container")
-    customerNumberContainer.innerHTML = `<span><strong>Kdnr:</strong> ${df[0]['Kundennummer']}</span>`;
-    const introductionTextContainer = document.getElementById("introduction-text-container")
-    introductionTextContainer.innerHTML = `<span><strong>Text:</strong></span><br><span>${df[0]['Belegtext']}</span>`;
-    const referenceContainer = document.getElementById("reference-text-container")
-    if (df[0]['Referenz']) {
-        referenceContainer.innerHTML = `<span><strong>Referenz: </strong></span> ${df[0]['Referenz']}`;
-    }
+export function fillInfo(result) {
+    const customerContainer = document.getElementById("customer-address-container")
+    const hue = result.customer_address.address_score * 1.2
+    customerContainer.innerHTML = `<span><strong>Rechnungsadresse:</strong></span>
+<address class="address-box">
+${result.customer_address.address.name}<br>
+${result.customer_address.address.street}<br>
+${result.customer_address.address.zip} ${result.customer_address.address.city}
+</address>
+<span style="background-color: hsl(${hue}, 80%, 50%)"><strong>Score: </strong> ${result.customer_address.address_score}</span>
+`;
+
     const deliveryContainer = document.getElementById("delivery-address-container")
+    const hueDelivery = result.delivery_address.address_score * 1.2
     deliveryContainer.innerHTML = `<span><strong>Lieferadresse:</strong></span>
 <address class="address-box">
-${df[0]['Name1']}<br>
-${df[0]['Strasse']}<br>
-${df[0]['PLZ']} ${df[0]['Ort']}
-`
+${result.delivery_address.address.name}<br>
+${result.delivery_address.address.street}<br>
+${result.delivery_address.address.zip} ${result.delivery_address.address.city}
+</address>
+<span style="background-color: hsl(${hueDelivery}, 80%, 50%)"><strong>Score: </strong>${result.delivery_address.address_score}</span>
+`;
+    const introductionTextContainer = document.getElementById("introduction-text-container")
+    introductionTextContainer.innerHTML = `<span><strong>Text:</strong></span><br><span>${result.df[0]['Belegtext']}</span>`;
+    const referenceContainer = document.getElementById("reference-text-container")
+    if (result.df[0]['Referenz']) {
+        referenceContainer.innerHTML = `<span><strong>Referenz: </strong></span> ${result.df[0]['Referenz']}`;
+}
 }
 
 export function showContent(): void {

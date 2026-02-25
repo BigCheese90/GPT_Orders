@@ -84,13 +84,19 @@ def test_item(email_item: EmailItem):
             pdf_text = parse_pdf_to_text(order_path / f"{attachment_name}")
             print(pdf_text)
 
-    df = create_csv_from_email(email_item.subject, email_item.body, pdf_text)
-    df.to_csv(order_path / "df.csv", index=False)
-    print(df)
-    df = df.to_dict(orient="records")
+    gpt_container = create_csv_from_email(email_item.subject, email_item.body, pdf_text)
+    print(gpt_container.df)
+    # df = pd.DataFrame.from_dict(gpt_container.df)
+    # print(df)
+    # df.to_csv(order_path / "df.csv", index=False)
+    # print(df)
+    # df = df.to_dict(orient="records")
+    # print(df)
 
     return {"message": "Item successfully uploaded",
-            "df": df}
+            "df": gpt_container.df,
+            "customer_address": gpt_container.customer_address,
+            "delivery_address": gpt_container.delivery_address}
 
 @app.post("/test_df")
 def test_df():
@@ -118,7 +124,7 @@ def import_order(import_data: ImportItem):
         print(result)
     return {"message": "Item successfully uploaded",}
 
-app.mount("/frontend", StaticFiles(directory="static"), name="static")
+app.mount("/frontend", StaticFiles(directory="OfficeAddIn\\dist"), name="static")
 
 if __name__ == "__main__":
     uvicorn.run("api:app",

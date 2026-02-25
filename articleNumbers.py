@@ -19,6 +19,8 @@ def validate_article_number(article_number: str) -> str:
     else:
         return "Not Found"
 def validate_single_article_number(article_number: str, article_list: pd.DataFrame) -> str:
+    print("validating ", article_number)
+    article_number = article_number.lower()
     if article_number in article_list.AllnetArtikelNummer.values:
         return article_number
     match_manufacturer = article_list[article_list.HerstellerArtikelNummer == article_number]
@@ -40,7 +42,7 @@ def find_allnet_article_number(item: OrderItem) -> str:
     possible_numbers.extend(item.möglicheArtikelnummern)
     print(possible_numbers)
     for possible in possible_numbers:
-        article_number = validate_single_article_number(possible, data)
+        article_number = validate_single_article_number(str(possible), data)
         if article_number != "Not Found":
             break
 
@@ -50,4 +52,11 @@ def find_allnet_article_number(item: OrderItem) -> str:
 
 
 if __name__ == "__main__":
-    print(validate_article_number("5060408464236"))
+    data = pd.read_csv(ARTICLE_CSV,
+                       sep=";",
+                       dtype={"AllnetArtikelNummer": str,
+                              "HerstellerArtikelNummer": str}, on_bad_lines='skip')
+    data['AllnetArtikelNummer'] = data['AllnetArtikelNummer'].apply(lambda x: x.lower() if type(x) == str else x)
+    data['HerstellerArtikelNummer'] = data['HerstellerArtikelNummer'].apply(
+        lambda x: x.lower() if type(x) == str else x)
+    print(validate_single_article_number("SW/SBC/10S/10-250", data))

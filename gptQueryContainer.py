@@ -5,7 +5,7 @@ from datetime import datetime, date
 from typing_extensions import Self
 import logging
 import pandas as pd
-from chatGptHelper import Order, Address
+from chatGptHelper import Order, Address, AddressSearch
 from transformOrder import transform_order, validate_response_and_extract_data
 from addressFinder import add_address_number, find_customer_address, find_delivery_address
 from articleNumbers import validate_article_number, find_allnet_article_number
@@ -17,12 +17,8 @@ class GPTQueryContainer(BaseModel):
     validated_order: Order | None = None
     transformed_order: Self | None = None
 
-    customer_address: Address | None = None
-    customer_number: str | None = None
-    customer_score: float | None = None
-    delivery_address: Address | None = None
-    delivery_address_number: str | None = None
-    delivery_address_score: float | None = None
+    customer_address: AddressSearch | None = None
+    delivery_address: AddressSearch | None = None
     df: list[dict] | None = None
 
 
@@ -36,15 +32,12 @@ class GPTQueryContainer(BaseModel):
     def transform_order(self) -> Self:
         order_validated = self.validated_order
 
-        customer_result = find_customer_address(order_validated.invoice_address)
-        self.customer_number = customer_result.address_number
-        self.customer_address = customer_result.address
-        self.customer_score = customer_result.address_score
+        self.customer_address = find_customer_address(order_validated.invoice_address)
+        if self.customer_address.address_number == "239435":
+            self.delivery_address = self.customer_address
+        else:
+            self.delivery_address = find_delivery_address(order_validated.delivery_address, self.customer_address)
 
-        delivery_address_result = find_delivery_address(order_validated.delivery_address, customer_result)
-        self.delivery_address_number = delivery_address_result.address_number
-        self.delivery_address = delivery_address_result.address
-        self.delivery_address_score = delivery_address_result.address_score
 
         #self.date = order_validated.order_date
         order_date = order_validated.order_date
@@ -56,7 +49,7 @@ class GPTQueryContainer(BaseModel):
             if article_number == "Not Found":
                 continue
             position = {
-                "Kundennummer": self.customer_number,
+                "Kundennummer": self.customer_address.address_number,
                 "Pos": i + 1,
                 "Artikelnummer": article_number,
                 "Menge": item.quantity,
@@ -64,7 +57,7 @@ class GPTQueryContainer(BaseModel):
                 "Belegtext": f"e-mail Best. #{order_validated.order_id} vom {order_date_str}" if i == 0 else "",
                 "Referenz": clean_strings_for_export(order_validated.referenz) if i == 0 else "",
                 "Datum": order_date_str,
-                "Liefer-ID": self.delivery_address_number,
+                "Liefer-ID": self.delivery_address.address_number,
                 "Land": "A",
                 "PLZ": order_validated.delivery_address.zip,
                 "Ort": order_validated.delivery_address.city,
@@ -75,7 +68,7 @@ class GPTQueryContainer(BaseModel):
             order_items.append(position)
 
 
-        logging.info(order_validated)
+        logging.info(order_items)
         self.df = order_items
         return self
 

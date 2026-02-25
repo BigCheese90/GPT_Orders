@@ -4,10 +4,10 @@
   <Version>1.0.0.0</Version>
   <ProviderName>Contoso</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
-  <DisplayName DefaultValue="OfficeAddIn4"/>
-  <Description DefaultValue="A template to get started."/>
-  <IconUrl DefaultValue="https://192.168.31.180:8432/frontend/assets/icon-64.png"/>
-  <HighResolutionIconUrl DefaultValue="https://192.168.31.180:8432/frontend/assets/icon-128.png"/>
+  <DisplayName DefaultValue="Email Bestellimport"/>
+  <Description DefaultValue="Analysiere die Email und Importiere die Daten ins Wawi."/>
+  <IconUrl DefaultValue="https://192.168.31.180:8432/frontend/assets/allnetoster.jpg"/>
+  <HighResolutionIconUrl DefaultValue="https://192.168.31.180:8432/frontend/assets/allnetoster.jpg"/>
   <SupportUrl DefaultValue="https://www.contoso.com/help"/>
   <AppDomains>
     <AppDomain>https://www.contoso.com</AppDomain>
@@ -75,6 +75,7 @@
     </Hosts>
     <Resources>
       <bt:Images>
+<!--            <bt:Image id="Icon.16x16" DefaultValue="https://192.168.31.180:8432/frontend/assets/allnetoster.jpg"/>-->
         <bt:Image id="Icon.16x16" DefaultValue="https://192.168.31.180:8432/frontend/assets/icon-16.png"/>
         <bt:Image id="Icon.32x32" DefaultValue="https://192.168.31.180:8432/frontend/assets/icon-32.png"/>
         <bt:Image id="Icon.80x80" DefaultValue="https://192.168.31.180:8432/frontend/assets/icon-80.png"/>
@@ -83,8 +84,8 @@
         <bt:Url id="Taskpane.Url" DefaultValue="https://192.168.31.180:8432/frontend/taskpane.html"/>
       </bt:Urls>
       <bt:ShortStrings>
-        <bt:String id="GroupLabel" DefaultValue="Contoso Add-in2"/>
-        <bt:String id="TaskpaneButton.Label" DefaultValue="Show Task Pane"/>
+        <bt:String id="GroupLabel" DefaultValue="E-mail Bestellungen"/>
+        <bt:String id="TaskpaneButton.Label" DefaultValue="Analysieren"/>
       </bt:ShortStrings>
       <bt:LongStrings>
         <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Opens a pane displaying all available properties."/>

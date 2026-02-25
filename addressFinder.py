@@ -57,7 +57,7 @@ def find_best_match(order, customers):
             best_score = s
             best = c
 
-    return best, best_score
+    return best, round(best_score,2)
 
 def special_customers(address: pd.DataFrame):
     row = address[address.Nummer == "237889"].copy()
@@ -67,6 +67,7 @@ def special_customers(address: pd.DataFrame):
     row["Firmenname_1"] = "PKE Energy Automation GmbH"
     address = pd.concat([address, row], ignore_index=True)
     return address
+
 
 def find_address_number(order, is_customer=False):
     address = pd.read_csv(ADDRESS_CSV, sep=";", na_filter=False)
@@ -89,14 +90,20 @@ def find_customer_address(search_address):
     customers = address_list.to_dict(orient="records")
 
     best_match, score = find_best_match(search_address, customers)
-    customer_address = Address(name=best_match["Firmenname_1"],
-                                    street=best_match["Strasse"],
-                                    zip=best_match["Plz"],
-                                    city=best_match["Ort"])
-    customer_number = best_match["Nummer"]
-    result = AddressSearch(address_score=score, address=customer_address, address_number=customer_number)
+    if best_match:
+        customer_address = Address(name=best_match["Firmenname_1"],
+                                   street=best_match["Strasse"],
+                                   zip=best_match["Plz"],
+                                   city=best_match["Ort"])
+        customer_number = best_match["Nummer"]
 
-    return result
+    else:
+        customer_address = Address(name="Kunde nicht gefunden", street="", zip="0000", city="city")
+        customer_number = "239435"
+
+    result_address = AddressSearch(address_score=score, address=customer_address, address_number=customer_number)
+
+    return result_address
 
 
 
@@ -110,7 +117,7 @@ def find_delivery_address(search_address, customer):
     delivery_address = search_address
     delivery_address_number = best_match["Nummer"]
     if score < 90 or delivery_address_number == "0":
-        delivery_address_number = add_address_number(customer.address_number, search_address)["Nummer"]
+        delivery_address_number = add_address_number(customer.address_number, search_address)
 
     # if "" in data["delivery_address"]:
     #     data["delivery_address"] = data["invoice_address"]
@@ -128,10 +135,10 @@ def add_address_number(customer, delivery_address):
             break
         i += 1
     new_row = {"Nummer": new_delivery_number,
-               "Firmenname_1": delivery_address["name"],
-               "Strasse": delivery_address["street"],
-               "Plz": delivery_address["zip"],
-               "Ort": delivery_address["city"],
+               "Firmenname_1": delivery_address.name,
+               "Strasse": delivery_address.street,
+               "Plz": delivery_address.zip,
+               "Ort": delivery_address.city,
                "Ist_Kunde": 0}
     new_row = pd.DataFrame(pd.Series(new_row)).T
     address_data = pd.concat([address_data, new_row], ignore_index=True)
@@ -139,3 +146,9 @@ def add_address_number(customer, delivery_address):
     address_data.to_csv(ADDRESS_CSV, index=False, sep=";")
     return new_delivery_number
 
+if __name__ == "__main__":
+    customer_address = Address(name="Schrack Seconet AG",
+                               street="Eibesbrunnergasse 18",
+                               zip="1120",
+                               city="Wien")
+    result = find_customer_address(customer_address)

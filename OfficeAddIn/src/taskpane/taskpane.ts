@@ -91,8 +91,9 @@ export async function run() {
       Helper.showError("Keine Artikel gefunden in Bestellung gefunden");
       return;
     }
-    Helper.createTable(result.df)
-    Helper.fillInfo(result.df)
+    console.log(result);
+    Helper.createTable(result.df);
+    Helper.fillInfo(result);
 
     Helper.showContent();
 
