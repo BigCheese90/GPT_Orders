@@ -17,3 +17,5 @@ vectorStore.py
 emailParser.py
 emailTestParser.py
 *.pem
+*.crt
+
