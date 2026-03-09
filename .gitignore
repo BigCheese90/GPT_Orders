@@ -16,4 +16,3 @@ itscope.py
 vectorStore.py
 emailParser.py
 emailTestParser.py
-*.pem
