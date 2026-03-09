@@ -17,7 +17,7 @@ let exportData = {
 
 Office.onReady(async (info) => {
   if (info.host === Office.HostType.Outlook) {
-    console.log("ready")
+    console.log("ready2")
 
     document.getElementById("sideload-msg").style.display = "none";
     document.getElementById("app-body").style.display = "flex";
