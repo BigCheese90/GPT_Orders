@@ -114,16 +114,21 @@ def find_delivery_address(search_address, customer):
     customers = address_list.to_dict(orient="records")
 
     best_match, score = find_best_match(search_address, customers)
-    delivery_address = search_address
-    delivery_address_number = best_match["Nummer"]
-    if score < 90 or delivery_address_number == "0":
-        delivery_address_number = add_address_number(customer.address_number, search_address)
+    if best_match:
+        delivery_address = search_address
+        delivery_address_number = best_match["Nummer"]
+        if score < 90 or delivery_address_number == "0":
+            delivery_address_number = add_address_number(customer.address_number, search_address)
+
+        return AddressSearch(address_score=score, address=delivery_address, address_number=delivery_address_number)
+
+    else:
+        delivery_address = Address(name="Kunde nicht gefunden", street="", zip="0000", city="city")
+
+        return AddressSearch(address_score=score, address=delivery_address, address_number="239435")
 
     # if "" in data["delivery_address"]:
     #     data["delivery_address"] = data["invoice_address"]
-
-    result = AddressSearch(address_score=score, address=delivery_address, address_number=delivery_address_number)
-    return result
 
 def add_address_number(customer, delivery_address):
     address_data = pd.read_csv(ADDRESS_CSV, sep=";")
