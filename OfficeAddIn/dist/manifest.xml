@@ -2,15 +2,13 @@
 <OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0" xsi:type="MailApp">
   <Id>932224dd-5c40-46df-ab08-7a92faae5db8</Id>
   <Version>1.0.0.0</Version>
-  <ProviderName>Contoso</ProviderName>
+  <ProviderName>Jakob Lassnig</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Email Bestellimport"/>
   <Description DefaultValue="Analysiere die Email und Importiere die Daten ins Wawi."/>
   <IconUrl DefaultValue="https://192.168.31.180:8432/frontend/assets/allnetoster.jpg"/>
   <HighResolutionIconUrl DefaultValue="https://192.168.31.180:8432/frontend/assets/allnetoster.jpg"/>
-  <SupportUrl DefaultValue="https://www.contoso.com/help"/>
   <AppDomains>
-    <AppDomain>https://www.contoso.com</AppDomain>
     <AppDomain>https://192.168.31.180:8432</AppDomain>
     <AppDomain>https://192.168.31.180</AppDomain>
   </AppDomains>
@@ -88,7 +86,7 @@
         <bt:String id="TaskpaneButton.Label" DefaultValue="Analysieren"/>
       </bt:ShortStrings>
       <bt:LongStrings>
-        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Opens a pane displaying all available properties."/>
+        <bt:String id="TaskpaneButton.Tooltip" DefaultValue="Öffnet ein Fenster mit Optionen zur Verarbeitung der Bestellung"/>
       </bt:LongStrings>
     </Resources>
   </VersionOverrides>

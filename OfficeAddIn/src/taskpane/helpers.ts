@@ -47,17 +47,22 @@ export async function getBody(item: any) {
 export async function getAttachments(item: any) {
     const attachmentPromises = item.attachments.map(att => {
         return new Promise((resolve) => {
-            item.getAttachmentContentAsync(att.id, (result) => {
-                resolve( {
-                    name: att.name,
-                    id: att.id,
-                    contentType: att.contentType,
-                    contentBytes: result.value.content
+            if (att.size == 0 || !att.id) {
+                resolve(null);
+            } else {
+                item.getAttachmentContentAsync(att.id, (result) => {
+                    resolve( {
+                        name: att.name,
+                        id: att.id,
+                        contentType: att.contentType,
+                        contentBytes: result.value.content
+                    });
                 });
-            });
+            }
         });
     });
-    return await Promise.all(attachmentPromises)
+    const results = await Promise.all(attachmentPromises);
+    return results.filter(res => res !== null);
 }
 
 export async function sendOffer(importData) {
