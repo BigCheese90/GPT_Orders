@@ -45,9 +45,10 @@ export async function getBody(item: any) {
 }
 
 export async function getAttachments(item: any) {
+    console.log(item);
     const attachmentPromises = item.attachments.map(att => {
         return new Promise((resolve) => {
-            if (att.size == 0 || !att.id) {
+            if (att.size == 0 || att.id == "") {
                 resolve(null);
             } else {
                 item.getAttachmentContentAsync(att.id, (result) => {
