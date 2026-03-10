@@ -7,6 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from pydantic import BaseModel, field_validator
 from typing import Optional, List, Any
+from bs4 import BeautifulSoup, Comment
 import pandas as pd
 import json
 from chatGptHelper import parse_pdf_to_text
@@ -53,6 +54,31 @@ class ImportItem(BaseModel):
     df: List
 
 
+def clean_outlook_html(raw_html):
+    if not raw_html:
+        return ""
+
+    soup = BeautifulSoup(raw_html, "html.parser")
+
+    # 1. Entferne Elemente, die keinen Textinhalt für die Analyse haben
+    # 'style' entfernt den CSS-Block, 'script' eventuellen Code
+    for hidden_tags in soup(["style", "script", "head", "title", "meta"]):
+        hidden_tags.decompose()
+
+    # 2. Entferne alle HTML-Kommentare (der Block)
+    for comment in soup.find_all(string=lambda text: isinstance(text, Comment)):
+        comment.extract()
+
+    # 3. Text-Extraktion mit intelligentem Separator
+    # Der Separator "\n" verhindert, dass Text aus verschiedenen Tabellenzellen
+    # oder Divs zu einem Wort verschmilzt.
+    text = soup.get_text(separator="\n")
+
+    # 4. Bereinigung von überflüssigen Leerzeichen und Leerzeilen
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+
+    return "\n".join(lines)
+
 
 @app.get("/")
 def read_root():
@@ -68,7 +94,7 @@ def test_item(email_item: EmailItem):
 
     order_path = BASE_DIR / "Api_Orders" / filename
     order_path.mkdir(parents=True, exist_ok=True)
-
+    email_item.body = clean_outlook_html(email_item.body)
     pdf_text = ""
     with open(order_path / "emailBody.txt", "w", encoding="utf-8") as f:
         f.write(email_item.body)

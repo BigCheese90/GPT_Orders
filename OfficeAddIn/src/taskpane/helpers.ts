@@ -35,12 +35,12 @@ export async function getBody(item: any) {
     return await new Promise<string>((resolve, reject) => {
         item.body.getAsync(Office.CoercionType.Html, (result) => {
             if (result.status === Office.AsyncResultStatus.Succeeded) {
-                const html = result.value;
-                const parser = new DOMParser();
-                const doc = parser.parseFromString(html, 'text/html')
-                const cleanText = doc.body.innerText || doc.body.textContent;
+                // const html = result.value;
+                // const parser = new DOMParser();
+                // const doc = parser.parseFromString(html, 'text/html')
+                // const cleanText = doc.body.innerText || doc.body.textContent;
 
-                resolve(cleanText)
+                resolve(result.value)
 
             } else {
                 reject(result.error)

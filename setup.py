@@ -4,5 +4,6 @@ setup(name="EmailBestellImport", version="0.1", packages=find_packages(), instal
                                                                                             'pydantic', 'pandas',
                                                                                             'rapidfuzz', 'fastapi',
                                                                                             'uvicorn',
-                                                                                            'typing-extensions'])
+                                                                                            'typing-extensions',
+                                                                                            'beautifulsoup4'])
 
