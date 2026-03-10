@@ -94,6 +94,8 @@ def test_item(email_item: EmailItem):
 
     order_path = BASE_DIR / "Api_Orders" / filename
     order_path.mkdir(parents=True, exist_ok=True)
+    with open(order_path / "emailHtml.txt", "w", encoding="utf-8") as file:
+        file.write(email_item.body)
     email_item.body = clean_outlook_html(email_item.body)
     pdf_text = ""
     with open(order_path / "emailBody.txt", "w", encoding="utf-8") as f:
