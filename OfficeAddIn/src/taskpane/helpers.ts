@@ -33,7 +33,7 @@ export async function sendToWawi(exportData) {
 
 export async function getBody(item: any) {
     return await new Promise<string>((resolve, reject) => {
-        item.body.getAsync(Office.CoercionType.Text, (result) => {
+        item.body.getAsync(Office.CoercionType.Html, (result) => {
             if (result.status === Office.AsyncResultStatus.Succeeded) {
 
                 resolve(result.value)
