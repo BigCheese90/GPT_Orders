@@ -36,9 +36,9 @@ export async function getBody(item: any) {
         item.body.getAsync(Office.CoercionType.Html, (result) => {
             if (result.status === Office.AsyncResultStatus.Succeeded) {
                 const html = result.value;
-                const tempDiv = document.createElement("div")
-                tempDiv.innerHTML = html;
-                const cleanText = tempDiv.innerText;
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(html, 'text/html')
+                const cleanText = doc.body.innerText || doc.body.textContent;
 
                 resolve(cleanText)
 
