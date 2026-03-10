@@ -35,8 +35,13 @@ export async function getBody(item: any) {
     return await new Promise<string>((resolve, reject) => {
         item.body.getAsync(Office.CoercionType.Html, (result) => {
             if (result.status === Office.AsyncResultStatus.Succeeded) {
+                const html = result.value;
+                const tempDiv = document.createElement("div")
+                tempDiv.innerHTML = html;
+                const cleanText = tempDiv.innerText;
 
-                resolve(result.value)
+                resolve(cleanText)
+
             } else {
                 reject(result.error)
             }
