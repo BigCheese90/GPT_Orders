@@ -1,5 +1,6 @@
 
 from openai.types.responses.parsed_response import ParsedResponse
+from typing import Literal
 from pydantic import BaseModel, model_validator, ConfigDict
 from datetime import datetime, date
 from typing_extensions import Self
@@ -20,7 +21,7 @@ class GPTQueryContainer(BaseModel):
     customer_address: AddressSearch | None = None
     delivery_address: AddressSearch | None = None
     df: list[dict] | None = None
-
+    prompt_cache_retention: Literal['in-memory', '24h', 'in_memory']
 
 
     @model_validator(mode="after")
