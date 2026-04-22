@@ -88,6 +88,7 @@ def create_csv_from_email(email_subject:str, email_body, pdf_text:str = ""):
     client = OpenAI(api_key=API_KEY)
 
     response = query_gpt(client, email_subject, email_body, pdf_text)
+    response.prompt_cache_retention = "in-memory"
     gpt_query_container = GPTQueryContainer(gpt_response=response)
 
     print(len(gpt_query_container.df))
@@ -96,6 +97,7 @@ def create_csv_from_email(email_subject:str, email_body, pdf_text:str = ""):
     if len(gpt_query_container.df) != len(gpt_query_container.validated_order.items):
         logging.info("Mismatch, Querying again")
         response = query_gpt(client, email_subject, email_body, pdf_text)
+        response.prompt_cache_retention = "in-memory"
         gpt_query_container = GPTQueryContainer(gpt_response=response)
 
     return gpt_query_container
