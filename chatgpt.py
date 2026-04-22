@@ -86,9 +86,9 @@ def create_csv_from_email(email_subject:str, email_body, pdf_text:str = ""):
     load_dotenv()
     API_KEY = os.getenv("API_KEY")
     client = OpenAI(api_key=API_KEY)
-    
+
     response = query_gpt(client, email_subject, email_body, pdf_text)
-    print(response)
+    response = response.replace("prompt_cache_retention='in_memory", "prompt_cache_retention='in-memory")
     gpt_query_container = GPTQueryContainer(gpt_response=response)
 
     print(len(gpt_query_container.df))

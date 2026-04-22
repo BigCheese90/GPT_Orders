@@ -21,7 +21,7 @@ class GPTQueryContainer(BaseModel):
     customer_address: AddressSearch | None = None
     delivery_address: AddressSearch | None = None
     df: list[dict] | None = None
-    prompt_cache_retention: Literal['in-memory', '24h', 'in_memory']
+   
 
 
     @model_validator(mode="after")
