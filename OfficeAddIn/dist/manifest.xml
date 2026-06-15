@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <OfficeApp xmlns="http://schemas.microsoft.com/office/appforoffice/1.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0" xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0" xsi:type="MailApp">
   <Id>932224dd-5c40-46df-ab08-7a92faae5db8</Id>
-  <Version>1.0.0.0</Version>
+  <Version>1.0.1.0</Version>
   <ProviderName>Jakob Lassnig</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Email Bestellimport"/>
   <Description DefaultValue="Analysiere die Email und Importiere die Daten ins Wawi."/>
-  <IconUrl DefaultValue="https://192.168.31.180:8432/frontend/assets/allnetoster.jpg"/>
-  <HighResolutionIconUrl DefaultValue="https://192.168.31.180:8432/frontend/assets/allnetoster.jpg"/>
+  <IconUrl DefaultValue="https://allnet-intern.org/frontend/assets/allnetoster.jpg"/>
+  <HighResolutionIconUrl DefaultValue="https://allnet-intern.org/frontend/assets/allnetoster.jpg"/>
   <AppDomains>
-    <AppDomain>https://192.168.31.180:8432</AppDomain>
-    <AppDomain>https://192.168.31.180</AppDomain>
+    <AppDomain>https://allnet-intern.org</AppDomain>
   </AppDomains>
   <Hosts>
     <Host Name="Mailbox"/>
@@ -23,7 +22,7 @@
   <FormSettings>
     <Form xsi:type="ItemRead">
       <DesktopSettings>
-        <SourceLocation DefaultValue="https://192.168.31.180:8432/frontend/taskpane.html"/>
+        <SourceLocation DefaultValue="https://allnet-intern.org/frontend/taskpane.html?ver=1.0.1"/>
         <RequestedHeight>250</RequestedHeight>
       </DesktopSettings>
     </Form>
@@ -74,12 +73,12 @@
     <Resources>
       <bt:Images>
 <!--            <bt:Image id="Icon.16x16" DefaultValue="https://192.168.31.180:8432/frontend/assets/allnetoster.jpg"/>-->
-        <bt:Image id="Icon.16x16" DefaultValue="https://192.168.31.180:8432/frontend/assets/icon-16.png"/>
-        <bt:Image id="Icon.32x32" DefaultValue="https://192.168.31.180:8432/frontend/assets/icon-32.png"/>
-        <bt:Image id="Icon.80x80" DefaultValue="https://192.168.31.180:8432/frontend/assets/icon-80.png"/>
+        <bt:Image id="Icon.16x16" DefaultValue="https://allnet-intern.org/frontend/assets/icon-16.png"/>
+        <bt:Image id="Icon.32x32" DefaultValue="https://allnet-intern.org/frontend/assets/icon-32.png"/>
+        <bt:Image id="Icon.80x80" DefaultValue="https://allnet-intern.org/frontend/assets/icon-80.png"/>
       </bt:Images>
       <bt:Urls>
-        <bt:Url id="Taskpane.Url" DefaultValue="https://192.168.31.180:8432/frontend/taskpane.html"/>
+        <bt:Url id="Taskpane.Url" DefaultValue="https://allnet-intern.org/frontend/taskpane.html"/>
       </bt:Urls>
       <bt:ShortStrings>
         <bt:String id="GroupLabel" DefaultValue="E-mail Bestellungen"/>

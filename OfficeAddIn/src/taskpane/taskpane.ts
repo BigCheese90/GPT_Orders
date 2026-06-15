@@ -84,7 +84,7 @@ export async function run() {
 
 
   try {
-    const response = await fetch("https://192.168.31.180:8432/analyse_email", {
+    const response = await fetch("https://allnet-intern.org/analyse_email", {
       method: "POST",
       headers: {"Content-Type": "application/json"},
       body: JSON.stringify(payload)
