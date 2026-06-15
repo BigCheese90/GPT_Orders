@@ -5,7 +5,7 @@
   <ProviderName>Jakob Lassnig</ProviderName>
   <DefaultLocale>en-US</DefaultLocale>
   <DisplayName DefaultValue="Email Bestellimport"/>
-  <Description DefaultValue="Analysiere die Email und Importiere die Daten ins Wawi."/>
+  <Description DefaultValue="Analysiere die Email und Importiere die Daten ins Wawi.(v1.0.2.0)"/>
   <IconUrl DefaultValue="https://allnet-intern.org/frontend/assets/allnetoster.jpg"/>
   <HighResolutionIconUrl DefaultValue="https://allnet-intern.org/frontend/assets/allnetoster.jpg"/>
   <AppDomains>
