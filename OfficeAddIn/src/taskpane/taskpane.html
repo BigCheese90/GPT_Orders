@@ -13,6 +13,21 @@
 
     <!-- Office JavaScript API -->
     <script type="text/javascript" src="https://appsforoffice.microsoft.com/lib/1/hosted/office.js"></script>
+    <script>
+        if (window.trustedTypes && typeof window.trustedTypes.createPolicy === 'function') {
+            try {
+                if (!window.trustedTypes.defaultPolicy) {
+                    window.trustedTypes.createPolicy('default', {
+                        createHTML: (string) => string,
+                        createScriptURL: (string) => string,
+                        createScript: (string) => string,
+                    });
+                }
+            } catch (e) {
+                console.warn("Trusted Types policy bypass could not be initialized:", e);
+            }
+        }
+    </script>
 
     <!-- For more information on Fluent UI, visit https://developer.microsoft.com/fluentui#/. -->
     <link rel="stylesheet" href="https://res-1.cdn.office.net/files/fabric-cdn-prod_20230815.002/office-ui-fabric-core/11.1.0/css/fabric.min.css"/>
